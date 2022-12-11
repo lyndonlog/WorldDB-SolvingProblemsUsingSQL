@@ -369,17 +369,17 @@ SELECT stddev(LifeExpectancy) FROM COUNTRY WHERE LifeExpectancy IS NOT NULL;
 SELECT name, LifeExpectancy, (LifeExpectancy-AVG(LifeExpectancy) OVER()) /stddev(LifeExpectancy) OVER() as ZScore FROM country
 WHERE LifeExpectancy IS NOT NULL ORDER BY Zscore;
 
--- outliers 3 Standard deviation above/below the mean. Outside the 99.7%
+-- outliers 3 Standard deviation above/below the mean.
 SELECT * FROM
 (SELECT name, LifeExpectancy, (LifeExpectancy-AVG(LifeExpectancy) OVER()) /stddev(LifeExpectancy) OVER() as ZScore FROM country) t2
 WHERE Zscore > 2.576  OR Zscore < -2.576 ORDER BY LifeExpectancy;
 
--- outliers 2 Standard deviation above/below the mean. Outside the 95%
+-- outliers 2 Standard deviation above/below the mean.
 SELECT * FROM
 (SELECT name, LifeExpectancy, (LifeExpectancy-AVG(LifeExpectancy) OVER()) /stddev(LifeExpectancy) OVER() as ZScore FROM country) t2
 WHERE Zscore > 1.96  OR Zscore < -1.96 ORDER BY LifeExpectancy;
 
--- -- outliers 1 Standard deviation above/below the mean. Outside the 68%
+-- -- outliers 1 Standard deviation above/below the mean.
 SELECT * FROM
 (SELECT name, LifeExpectancy, (LifeExpectancy-AVG(LifeExpectancy) OVER()) /stddev(LifeExpectancy) OVER() as ZScore FROM country) t2
 WHERE Zscore > 1.65  OR Zscore < -1.65 ORDER BY LifeExpectancy;
